@@ -13,9 +13,7 @@ function EmployeesTable() {
   }, []);
 
   if (employees.length > 0) {
-    return (
-      <Table title="Employees table" data={employees as EmployeeDataType[]} />
-    );
+    return <Table title="Employees" data={employees as EmployeeDataType[]} />;
   }
   return <h3>Loading...</h3>;
 }

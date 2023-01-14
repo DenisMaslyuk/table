@@ -4,10 +4,13 @@ export const base = {
 
 export const light = {
   text: "#000000",
+  title: "#724b92",
+  titleHover: "#b254ff",
   error: "#A30D11",
+  errorHover: "#ff1b21",
   activeButton: "#624DE3",
   background: "#FFFFFF",
-  arrow: "#9E9E9E",
+  border: "#e8e5ff",
   success: "#1F9254",
   successBackground: "#EBF9F1",
   additionalBackground: "#F7F6FE",
