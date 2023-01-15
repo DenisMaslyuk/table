@@ -14,6 +14,7 @@ export const StyledApp = styled.div(
     padding: 0;
     border none;
     cursor: pointer;
+    background-color: transparent;
   }
 `
 );

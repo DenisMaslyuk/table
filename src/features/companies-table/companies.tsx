@@ -2,19 +2,39 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Table from "../../shared/table";
 import { CompanyDataType } from "./companies-data";
-import { getCompaniesDataAsync, selectCompanies } from "./companies-slice";
+import {
+  getCompaniesDataAsync,
+  removeCompany,
+  selectCompanies,
+} from "./companies-slice";
 
 function CompaniesTable() {
-  const employees = useAppSelector(selectCompanies);
+  const { data: companies, status } = useAppSelector(selectCompanies);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getCompaniesDataAsync());
+    if (companies.length === 0) dispatch(getCompaniesDataAsync());
   }, []);
 
-  if (employees.length > 0) {
-    return <Table title="Companies" data={employees as CompanyDataType[]} />;
+  const onDeleteHandler = (id: number) => {
+    dispatch(removeCompany(id));
+  };
+
+  switch (status) {
+    case "loading":
+      return <h3>Loading...</h3>;
+    case "failed":
+      return <h3>Failed</h3>;
+    default:
+      break;
   }
-  return <h3>Loading...</h3>;
+
+  return (
+    <Table
+      title="Companies"
+      data={companies as CompanyDataType[]}
+      onDeleteHandler={onDeleteHandler}
+    />
+  );
 }
 export default CompaniesTable;

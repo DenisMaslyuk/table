@@ -1,16 +1,16 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { fetchCompaniesData } from "./companies-API";
 import { CompanyDataType } from "./companies-data";
 
-export type companiesState = {
+export type CompaniesState = {
   data: CompanyDataType[] | [];
   status: "idle" | "loading" | "failed";
 };
 
-const initialState: companiesState = {
+const initialState: CompaniesState = {
   data: [],
-  status: "idle",
+  status: "loading",
 };
 
 export const getCompaniesDataAsync = createAsyncThunk(
@@ -24,7 +24,11 @@ export const getCompaniesDataAsync = createAsyncThunk(
 export const companiesSlice = createSlice({
   name: "companiesData",
   initialState,
-  reducers: {},
+  reducers: {
+    removeCompany: (state, action: PayloadAction<number>) => {
+      state.data.splice(action.payload, 1);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getCompaniesDataAsync.pending, (state) => {
@@ -40,6 +44,8 @@ export const companiesSlice = createSlice({
   },
 });
 
-export const selectCompanies = (state: RootState) => state.companies.data;
+export const selectCompanies = (state: RootState) => state.companies;
+
+export const { removeCompany } = companiesSlice.actions;
 
 export default companiesSlice.reducer;

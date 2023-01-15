@@ -17,10 +17,15 @@ export type TablePropsType = {
   data: Array<{
     [key: string]: string;
   }>;
+  onDeleteHandler: (id: number) => void;
 };
 
-function Table({ data, title }: TablePropsType) {
+function Table({ data, title, onDeleteHandler }: TablePropsType) {
+  if (data.length < 0) {
+    <h3>No data</h3>;
+  }
   const keys = Object.keys(data[0]);
+
   return (
     <div>
       <StyledTitle>
@@ -55,7 +60,10 @@ function Table({ data, title }: TablePropsType) {
                   <EditButton>
                     <EditIcon />
                   </EditButton>
-                  <TrashButton>
+                  <TrashButton
+                    type="button"
+                    onClick={() => onDeleteHandler(id)}
+                  >
                     <TrashIcon />
                   </TrashButton>
                 </ActionContainer>

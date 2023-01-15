@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { fetchEmployeeData } from "./employee-API";
 import { EmployeeDataType } from "./employee-data";
@@ -10,7 +10,7 @@ export type EmployeesState = {
 
 const initialState: EmployeesState = {
   data: [],
-  status: "idle",
+  status: "loading",
 };
 
 export const getEmployeesDataAsync = createAsyncThunk(
@@ -24,7 +24,11 @@ export const getEmployeesDataAsync = createAsyncThunk(
 export const employeesSlice = createSlice({
   name: "employeesData",
   initialState,
-  reducers: {},
+  reducers: {
+    removeEmployee: (state, action: PayloadAction<number>) => {
+      state.data.splice(action.payload, 1);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getEmployeesDataAsync.pending, (state) => {
@@ -40,6 +44,8 @@ export const employeesSlice = createSlice({
   },
 });
 
-export const selectEmployee = (state: RootState) => state.employees.data;
+export const selectEmployee = (state: RootState) => state.employees;
+
+export const { removeEmployee } = employeesSlice.actions;
 
 export default employeesSlice.reducer;

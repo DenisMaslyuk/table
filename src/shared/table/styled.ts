@@ -33,7 +33,6 @@ export const StyledTitle = styled.div(
 export const StyledTable = styled.table(
   ({ theme }) => `
   width: 100%;
-  height: 100%;
   border-spacing: 0;
   border: 2px solid ${theme.colors.border};
   border-radius: 16px;
@@ -68,10 +67,9 @@ export const TBody = styled.tbody``;
 export const Td = styled.td(
   ({ theme }) => `
   padding: 16px;
-  font-style: normal;
   font-weight: 500;
   font-size: 14px;
-  line-height: 17px;
+  line-height: 16px;
   color: ${theme.colors.text};
   text-align: left;
 

@@ -2,19 +2,41 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Table from "../../shared/table";
 import { EmployeeDataType } from "./employee-data";
-import { getEmployeesDataAsync, selectEmployee } from "./employeeSlice";
+import {
+  getEmployeesDataAsync,
+  removeEmployee,
+  selectEmployee,
+} from "./employeeSlice";
 
 function EmployeesTable() {
-  const employees = useAppSelector(selectEmployee);
+  const { data: employees, status } = useAppSelector(selectEmployee);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getEmployeesDataAsync());
+    if (employees.length === 0) {
+      dispatch(getEmployeesDataAsync());
+    }
   }, []);
 
-  if (employees.length > 0) {
-    return <Table title="Employees" data={employees as EmployeeDataType[]} />;
+  const onDeleteHandler = (id: number) => {
+    dispatch(removeEmployee(id));
+  };
+
+  switch (status) {
+    case "loading":
+      return <h3>Loading...</h3>;
+    case "failed":
+      return <h3>Failed</h3>;
+    default:
+      break;
   }
-  return <h3>Loading...</h3>;
+
+  return (
+    <Table
+      title="Employees"
+      data={employees as EmployeeDataType[]}
+      onDeleteHandler={onDeleteHandler}
+    />
+  );
 }
 export default EmployeesTable;
