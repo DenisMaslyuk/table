@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Table from "../../shared/table";
+import { RowType } from "../../shared/table/row";
 import { EmployeeDataType } from "./employee-data";
 import {
   getEmployeesDataAsync,
   removeEmployee,
+  saveEmpoyee,
   selectEmployee,
 } from "./employeeSlice";
 
@@ -13,13 +15,15 @@ function EmployeesTable() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (employees.length === 0) {
-      dispatch(getEmployeesDataAsync());
-    }
+    dispatch(getEmployeesDataAsync());
   }, []);
 
   const onDeleteHandler = (id: number) => {
     dispatch(removeEmployee(id));
+  };
+
+  const onSaveHandler = (id: number, row: RowType) => {
+    dispatch(saveEmpoyee({ id, row }));
   };
 
   switch (status) {
@@ -36,6 +40,7 @@ function EmployeesTable() {
       title="Employees"
       data={employees as EmployeeDataType[]}
       onDeleteHandler={onDeleteHandler}
+      onSaveHandler={onSaveHandler}
     />
   );
 }

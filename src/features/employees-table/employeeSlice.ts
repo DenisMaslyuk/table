@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
+import { RowType } from "../../shared/table/row";
 import { fetchEmployeeData } from "./employee-API";
 import { EmployeeDataType } from "./employee-data";
 
@@ -28,6 +29,14 @@ export const employeesSlice = createSlice({
     removeEmployee: (state, action: PayloadAction<number>) => {
       state.data.splice(action.payload, 1);
     },
+    saveEmpoyee: (
+      state,
+      action: PayloadAction<{ id: number; row: RowType }>
+    ) => {
+      const newData = [...state.data];
+      newData[action.payload.id] = action.payload.row;
+      state.data = newData;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -46,6 +55,6 @@ export const employeesSlice = createSlice({
 
 export const selectEmployee = (state: RootState) => state.employees;
 
-export const { removeEmployee } = employeesSlice.actions;
+export const { removeEmployee, saveEmpoyee } = employeesSlice.actions;
 
 export default employeesSlice.reducer;

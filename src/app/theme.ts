@@ -8,7 +8,7 @@ export const light = {
   titleHover: "#b254ff",
   error: "#A30D11",
   errorHover: "#ff1b21",
-  activeButton: "#624DE3",
+  saveButton: "#624DE3",
   background: "#FFFFFF",
   border: "#e8e5ff",
   success: "#1F9254",

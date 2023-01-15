@@ -9,12 +9,5 @@ export const StyledApp = styled.div(
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 30px;
-
-  button {
-    padding: 0;
-    border none;
-    cursor: pointer;
-    background-color: transparent;
-  }
 `
 );

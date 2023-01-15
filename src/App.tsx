@@ -10,7 +10,6 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <StyledApp>
-        <EmployeesTable />
         <CompaniesTable />
       </StyledApp>
     </ThemeProvider>

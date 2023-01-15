@@ -41,14 +41,17 @@ export const StyledTable = styled.table(
 `
 );
 export const THead = styled.thead``;
-export const Tr = styled.tr(
-  ({ theme }) => `
-
+export const Tr = styled.tr<{ isChecked?: boolean }>(
+  ({ theme, isChecked }) => `
+  
   &:nth-child(odd) {
     td {
-      background-color: ${theme.colors.additionalBackground};
+      background-color: ${
+        isChecked ? "#d9d4f8" : theme.colors.additionalBackground
+      };
     }
-}
+  }
+  ${isChecked ? " td { background-color: #d9d4f8;}" : ""}
 `
 );
 export const Th = styled.th(
@@ -76,6 +79,24 @@ export const Td = styled.td(
 `
 );
 
+export const StyledCheckbox = styled.input(
+  () => `
+  cursor: pointer;
+`
+);
+
+export const StyledInput = styled.input(
+  ({ theme }) => `
+  width: 90%;
+  margin: 4px 8px 4px 0; 
+  border: 1px solid ${theme.colors.border};
+  border-radius: 8px;
+  font-size: 14px;
+  padding: 8px 8px;
+  font-family: "Montserrat";
+`
+);
+
 export const ActionContainer = styled.div(
   () => `
   display: flex;
@@ -84,8 +105,24 @@ export const ActionContainer = styled.div(
 `
 );
 
+export const SaveButton = styled.button(
+  ({ theme }) => `
+    padding: 4px 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: ${theme.colors.saveButton};
+    color: ${theme.colors.background};
+`
+);
+
 export const EditButton = styled.button(
   ({ theme }) => `
+
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
     color: ${theme.colors.title};
 
     &:hover {
@@ -96,6 +133,10 @@ export const EditButton = styled.button(
 
 export const TrashButton = styled.button(
   ({ theme }) => `
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
     color: ${theme.colors.error};
 
     &:hover {
