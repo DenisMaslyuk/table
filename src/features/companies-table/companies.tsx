@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Table from "../../shared/table";
 import { RowType } from "../../shared/table/row";
+import { selectEmployee } from "../employees-table/employeeSlice";
 import { CompanyDataType } from "./companies-data";
 import {
   getCompaniesDataAsync,
@@ -16,11 +17,26 @@ type CompaniesTableProps = {
 
 function CompaniesTable({ setSelectedRows }: CompaniesTableProps) {
   const { data: companies, status } = useAppSelector(selectCompanies);
+  const { data: employees, status: employeesStatus } =
+    useAppSelector(selectEmployee);
+
+  const [migrationCompanies, setMigrationCompanies] = useState(employees);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getCompaniesDataAsync());
   }, []);
+
+  useEffect(() => {
+    setMigrationCompanies(
+      companies.map((company) => {
+        const number = employees
+          .filter((em) => em.company === company.company)
+          .length.toString();
+        return { ...company, n: number };
+      })
+    );
+  }, [employees, companies]);
 
   const onDeleteHandler = (id: number) => {
     dispatch(removeCompany(id));
@@ -42,7 +58,7 @@ function CompaniesTable({ setSelectedRows }: CompaniesTableProps) {
   return (
     <Table
       title="Companies"
-      data={companies as CompanyDataType[]}
+      data={migrationCompanies as CompanyDataType[]}
       onDeleteHandler={onDeleteHandler}
       onSaveHandler={onSaveHandler}
       setSelectedRows={setSelectedRows}

@@ -16,13 +16,8 @@ const initialState: EmployeesState = {
 
 export const getEmployeesDataAsync = createAsyncThunk(
   "employeesData/fetchEmployeeData",
-  async (selectedRows: RowType[]) => {
+  async () => {
     const response = await fetchEmployeeData();
-    if (selectedRows.length === 1) {
-      return response.filter(
-        (data) => data.company === selectedRows[0].company
-      );
-    }
     return response;
   }
 );

@@ -54,7 +54,7 @@ function Row({
   useEffect(() => setIsChecked(selectAll), [selectAll]);
 
   return (
-    <Tr key={Math.random()} isChecked={isChecked}>
+    <Tr isChecked={isChecked}>
       <Td>
         <StyledCheckbox
           type="checkbox"
@@ -79,11 +79,17 @@ function Row({
             .filter((el) => !disabledColumn?.includes(el))
             .map((key) => (
               <Td style={{ padding: "8px" }}>
-                <StyledInput
-                  type="text"
-                  value={row[key]}
-                  onChange={(event) => onChangeHandler(key, event.target.value)}
-                />
+                {key === "n" ? (
+                  <Td>{row[key]}</Td>
+                ) : (
+                  <StyledInput
+                    type="text"
+                    value={row[key]}
+                    onChange={(event) =>
+                      onChangeHandler(key, event.target.value)
+                    }
+                  />
+                )}
               </Td>
             ))}
           <Td>

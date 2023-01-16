@@ -35,6 +35,9 @@ export const companiesSlice = createSlice({
     removeCompany: (state, action: PayloadAction<number>) => {
       state.data.splice(action.payload, 1);
     },
+    updateCompanies: (state, action: PayloadAction<CompanyDataType[]>) => {
+      state.data = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -53,6 +56,7 @@ export const companiesSlice = createSlice({
 
 export const selectCompanies = (state: RootState) => state.companies;
 
-export const { removeCompany, saveCompany } = companiesSlice.actions;
+export const { removeCompany, saveCompany, updateCompanies } =
+  companiesSlice.actions;
 
 export default companiesSlice.reducer;

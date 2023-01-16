@@ -4,12 +4,19 @@ import { base, light } from "./app/theme";
 import { StyledApp } from "./app/styled";
 import EmployeesTable from "./features/employees-table/employee";
 import CompaniesTable from "./features/companies-table/companies";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RowType } from "./shared/table/row";
+import { getEmployeesDataAsync } from "./features/employees-table/employeeSlice";
+import { useAppDispatch } from "./app/hooks";
 
 function App() {
   const theme = { ...base, colors: light };
   const [selectedRows, setSelectedRows] = useState<RowType[]>([]);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getEmployeesDataAsync());
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
