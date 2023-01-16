@@ -79,7 +79,7 @@ function Row({
             .filter((el) => !disabledColumn?.includes(el))
             .map((key) => (
               <Td style={{ padding: "8px" }}>
-                {key === "n" ? (
+                {key === "n" ? ( // TODO add disabled input
                   <Td>{row[key]}</Td>
                 ) : (
                   <StyledInput
