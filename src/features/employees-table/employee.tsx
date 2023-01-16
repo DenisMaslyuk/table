@@ -10,12 +10,16 @@ import {
   selectEmployee,
 } from "./employeeSlice";
 
-function EmployeesTable() {
+type EmployeesTableProps = {
+  selectedRows: RowType[];
+};
+
+function EmployeesTable({ selectedRows }: EmployeesTableProps) {
   const { data: employees, status } = useAppSelector(selectEmployee);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getEmployeesDataAsync());
+    dispatch(getEmployeesDataAsync(selectedRows));
   }, []);
 
   const onDeleteHandler = (id: number) => {
@@ -41,6 +45,7 @@ function EmployeesTable() {
       data={employees as EmployeeDataType[]}
       onDeleteHandler={onDeleteHandler}
       onSaveHandler={onSaveHandler}
+      disabledColumn={["company"]}
     />
   );
 }

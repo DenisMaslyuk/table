@@ -7,16 +7,19 @@ export const employeesData: EmployeeDataType[] = [
     name: "Gareth",
     surname: "Hayden",
     birthday: "Jun 21, 1993",
+    company: "Faucibus LLC",
   },
   {
     name: "Wade",
     surname: "Sweeney",
     birthday: "Dec 7, 1988",
+    company: "Faucibus LLC",
   },
   {
     name: "Stewart",
     surname: "Pacheco",
     birthday: "Apr 15, 1986",
+    company: "Nisl Quisque Limited",
   },
   {
     name: "Addison",

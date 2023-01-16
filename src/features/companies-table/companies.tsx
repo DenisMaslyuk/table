@@ -10,7 +10,11 @@ import {
   selectCompanies,
 } from "./companies-slice";
 
-function CompaniesTable() {
+type CompaniesTableProps = {
+  setSelectedRows: React.Dispatch<React.SetStateAction<RowType[]>>;
+};
+
+function CompaniesTable({ setSelectedRows }: CompaniesTableProps) {
   const { data: companies, status } = useAppSelector(selectCompanies);
   const dispatch = useAppDispatch();
 
@@ -41,6 +45,7 @@ function CompaniesTable() {
       data={companies as CompanyDataType[]}
       onDeleteHandler={onDeleteHandler}
       onSaveHandler={onSaveHandler}
+      setSelectedRows={setSelectedRows}
     />
   );
 }

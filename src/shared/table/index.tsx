@@ -1,18 +1,13 @@
 import { useState } from "react";
-import { EditIcon, TrashIcon } from "./icons";
 import Row, { RowType } from "./row";
 import {
-  ActionContainer,
-  EditButton,
   StyledCheckbox,
   StyledTable,
   StyledTitle,
   TBody,
-  Td,
   Th,
   THead,
   Tr,
-  TrashButton,
 } from "./styled";
 
 export type TablePropsType = {
@@ -22,6 +17,8 @@ export type TablePropsType = {
   }>;
   onDeleteHandler: (id: number) => void;
   onSaveHandler: (id: number, row: RowType) => void;
+  setSelectedRows?: React.Dispatch<React.SetStateAction<RowType[]>>;
+  disabledColumn?: string[];
 };
 
 function Table({
@@ -29,12 +26,14 @@ function Table({
   title,
   onDeleteHandler,
   onSaveHandler,
+  setSelectedRows,
+  disabledColumn,
 }: TablePropsType) {
-  if (data.length <= 0) {
-    <h3>No data</h3>;
+  const [selectAll, setSelectAll] = useState(false);
+  if (data.length === 0) {
+    return <h3>No data</h3>;
   }
   const keys = Object.keys(data[0]);
-  const [selectAll, setSelectAll] = useState(false);
 
   return (
     <div>
@@ -53,9 +52,11 @@ function Table({
                 onChange={() => setSelectAll(!selectAll)}
               />
             </Th>
-            {keys.map((key) => (
-              <Th>{key}</Th>
-            ))}
+            {keys
+              .filter((el) => !disabledColumn?.includes(el))
+              .map((key) => (
+                <Th>{key}</Th>
+              ))}
             <Th style={{ textAlign: "center" }}>Action</Th>
           </Tr>
         </THead>
@@ -68,6 +69,8 @@ function Table({
                 onDeleteHandler={onDeleteHandler}
                 onSaveHandler={onSaveHandler}
                 selectAll={selectAll}
+                setSelectedRows={setSelectedRows}
+                disabledColumn={disabledColumn}
               />
             );
           })}

@@ -16,8 +16,13 @@ const initialState: EmployeesState = {
 
 export const getEmployeesDataAsync = createAsyncThunk(
   "employeesData/fetchEmployeeData",
-  async () => {
+  async (selectedRows: RowType[]) => {
     const response = await fetchEmployeeData();
+    if (selectedRows.length === 1) {
+      return response.filter(
+        (data) => data.company === selectedRows[0].company
+      );
+    }
     return response;
   }
 );
@@ -33,9 +38,7 @@ export const employeesSlice = createSlice({
       state,
       action: PayloadAction<{ id: number; row: RowType }>
     ) => {
-      const newData = [...state.data];
-      newData[action.payload.id] = action.payload.row;
-      state.data = newData;
+      state.data[action.payload.id] = action.payload.row;
     },
   },
   extraReducers: (builder) => {

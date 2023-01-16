@@ -26,16 +26,14 @@ export const companiesSlice = createSlice({
   name: "companiesData",
   initialState,
   reducers: {
-    removeCompany: (state, action: PayloadAction<number>) => {
-      state.data.splice(action.payload, 1);
-    },
     saveCompany: (
       state,
       action: PayloadAction<{ id: number; row: RowType }>
     ) => {
-      const newData = [...state.data];
-      newData[action.payload.id] = action.payload.row;
-      state.data = newData;
+      state.data[action.payload.id] = action.payload.row;
+    },
+    removeCompany: (state, action: PayloadAction<number>) => {
+      state.data.splice(action.payload, 1);
     },
   },
   extraReducers: (builder) => {
