@@ -1,6 +1,6 @@
-# Preview
+# Preveiw
 
-[int.dmaslyuk.ru](https://int.dmaslyuk.ru/)
+[Table](https://int.dmaslyuk.ru/)
 
 # Getting Started with Create React App
 
