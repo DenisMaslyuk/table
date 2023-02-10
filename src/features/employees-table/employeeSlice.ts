@@ -4,6 +4,12 @@ import { RowType } from "../../shared/table/row";
 import { fetchEmployeeData } from "./employee-API";
 import { EmployeeDataType } from "./employee-data";
 
+const defaultEmployee: EmployeeDataType = {
+  name: "Name",
+  surname: "Surname",
+  birthday: "Jun 21, 1993",
+};
+
 export type EmployeesState = {
   data: EmployeeDataType[] | [];
   status: "idle" | "loading" | "failed";
@@ -35,6 +41,12 @@ export const employeesSlice = createSlice({
     ) => {
       state.data[action.payload.id] = action.payload.row;
     },
+    addEmployee: (state, action: PayloadAction<string>) => {
+      state.data = [
+        { ...defaultEmployee, company: action.payload },
+        ...state.data,
+      ];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -53,6 +65,7 @@ export const employeesSlice = createSlice({
 
 export const selectEmployee = (state: RootState) => state.employees;
 
-export const { removeEmployee, saveEmpoyee } = employeesSlice.actions;
+export const { removeEmployee, saveEmpoyee, addEmployee } =
+  employeesSlice.actions;
 
 export default employeesSlice.reducer;

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Row, { RowType } from "./row";
 import {
+  AddButtonWrapper,
+  StyledAddButton,
   StyledCheckbox,
   StyledTable,
   StyledTitle,
@@ -16,6 +18,7 @@ export type TablePropsType = {
     [key: string]: string;
   }>;
   onDeleteHandler: (id: number) => void;
+  onAddHandler: () => void;
   onSaveHandler: (id: number, row: RowType) => void;
   setSelectedRows?: React.Dispatch<React.SetStateAction<RowType[]>>;
   disabledColumn?: string[];
@@ -26,6 +29,7 @@ function Table({
   title,
   onDeleteHandler,
   onSaveHandler,
+  onAddHandler,
   setSelectedRows,
   disabledColumn,
 }: TablePropsType) {
@@ -43,6 +47,11 @@ function Table({
           <h3>table</h3>
         </div>
       </StyledTitle>
+      <AddButtonWrapper>
+        <StyledAddButton type="button" onClick={onAddHandler}>
+          Add row
+        </StyledAddButton>
+      </AddButtonWrapper>
       <StyledTable>
         <THead>
           <Tr>

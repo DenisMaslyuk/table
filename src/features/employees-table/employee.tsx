@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Table from "../../shared/table";
+import { StyledAddButton } from "../../shared/table/styled";
 import { RowType } from "../../shared/table/row";
 import { EmployeeDataType } from "./employee-data";
 import {
-  getEmployeesDataAsync,
+  addEmployee,
   removeEmployee,
   saveEmpoyee,
   selectEmployee,
@@ -35,6 +36,11 @@ function EmployeesTable({ selectedRows }: EmployeesTableProps) {
     dispatch(saveEmpoyee({ id, row }));
   };
 
+  const onAddHandler = () => {
+    if (selectedRows.length === 0) return;
+    dispatch(addEmployee(selectedRows[0].company));
+  };
+
   switch (status) {
     case "loading":
       return <h3>Loading...</h3>;
@@ -43,6 +49,13 @@ function EmployeesTable({ selectedRows }: EmployeesTableProps) {
     default:
       break;
   }
+  if (filteredEmployees.length === 0)
+    return (
+      <div>
+        <h3>There are no employees in this company</h3>
+        <StyledAddButton onClick={onAddHandler}>Add Employee</StyledAddButton>
+      </div>
+    );
 
   return (
     <Table
@@ -51,6 +64,7 @@ function EmployeesTable({ selectedRows }: EmployeesTableProps) {
       onDeleteHandler={onDeleteHandler}
       onSaveHandler={onSaveHandler}
       disabledColumn={["company"]}
+      onAddHandler={onAddHandler}
     />
   );
 }

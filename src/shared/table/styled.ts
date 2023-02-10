@@ -32,6 +32,7 @@ export const StyledTitle = styled.div(
 
 export const StyledTable = styled.table(
   ({ theme }) => `
+  margin-top: 20px;
   width: 100%;
   border-spacing: 0;
   border: 2px solid ${theme.colors.border};
@@ -40,6 +41,11 @@ export const StyledTable = styled.table(
   font-weight: 800;
 `
 );
+
+export const AddButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
 export const THead = styled.thead``;
 export const Tr = styled.tr<{ isChecked?: boolean }>(
   ({ theme, isChecked }) => `
@@ -113,8 +119,19 @@ export const SaveButton = styled.button(
     cursor: pointer;
     background-color: ${theme.colors.saveButton};
     color: ${theme.colors.background};
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: ${theme.colors.titleHover};
+    }
 `
 );
+
+export const StyledAddButton = styled(SaveButton)`
+  font-size: 20px;
+  padding: 8px 24px;
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+`;
 
 export const EditButton = styled.button(
   ({ theme }) => `

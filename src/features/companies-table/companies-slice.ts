@@ -4,6 +4,11 @@ import { RowType } from "../../shared/table/row";
 import { fetchCompaniesData } from "./companies-API";
 import { CompanyDataType } from "./companies-data";
 
+const defaultCompany: CompanyDataType = {
+  company: "Company",
+  address: "Address",
+};
+
 export type CompaniesState = {
   data: CompanyDataType[] | [];
   status: "idle" | "loading" | "failed";
@@ -38,6 +43,9 @@ export const companiesSlice = createSlice({
     updateCompanies: (state, action: PayloadAction<CompanyDataType[]>) => {
       state.data = action.payload;
     },
+    addCompany: (state) => {
+      state.data = [defaultCompany, ...state.data];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -56,7 +64,7 @@ export const companiesSlice = createSlice({
 
 export const selectCompanies = (state: RootState) => state.companies;
 
-export const { removeCompany, saveCompany, updateCompanies } =
+export const { removeCompany, saveCompany, updateCompanies, addCompany } =
   companiesSlice.actions;
 
 export default companiesSlice.reducer;

@@ -9,6 +9,7 @@ import {
   removeCompany,
   saveCompany,
   selectCompanies,
+  addCompany,
 } from "./companies-slice";
 
 type CompaniesTableProps = {
@@ -46,6 +47,10 @@ function CompaniesTable({ setSelectedRows }: CompaniesTableProps) {
     dispatch(saveCompany({ id, row }));
   };
 
+  const onAddHandler = () => {
+    dispatch(addCompany());
+  };
+
   switch (status) {
     case "loading":
       return <h3>Loading...</h3>;
@@ -62,6 +67,7 @@ function CompaniesTable({ setSelectedRows }: CompaniesTableProps) {
       onDeleteHandler={onDeleteHandler}
       onSaveHandler={onSaveHandler}
       setSelectedRows={setSelectedRows}
+      onAddHandler={onAddHandler}
     />
   );
 }
